@@ -10,7 +10,7 @@ export class FunctionalText extends Text {
   }
 
   get renderedText(): string {
-      return this.renderFunction();
+    return this.renderFunction();
   }
 }
 
