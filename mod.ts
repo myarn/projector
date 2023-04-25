@@ -1,5 +1,5 @@
 import { findIndexs } from './utils.ts';
-import { cursorDown, cursorHide, cursorRestore, cursorSave, cursorShow, cursorUp, eraseLine } from '../deps.ts'
+import { cursorDown, cursorHide, cursorRestore, cursorSave, cursorShow, cursorUp, eraseLine } from './deps.ts'
 import { Line } from './components/Line/mod.ts';
 
 export class Projector {
