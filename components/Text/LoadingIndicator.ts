@@ -29,7 +29,7 @@ export class LoadingIndicator extends Text {
 
   next () {
     this.index++;
-    if (this.index > this.indicators.length) this.index = 0;
+    if (this.index >= this.indicators.length - 1) this.index = 0;
   }
 
   get renderedText (): string {
