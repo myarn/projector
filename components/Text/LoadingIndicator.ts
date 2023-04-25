@@ -1,8 +1,9 @@
 import { Text } from '../../mod.ts';
+import { colors } from '../../deps.ts';
 
 export class LoadingIndicator extends Text {
   id?: number;
-  completeText = '✔';
+  completeText = colors.green('✔');
 
   #index = 0;
   #isCompleted = false;
