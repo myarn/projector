@@ -1,7 +1,7 @@
 import { FunctionalText, Text, TextComponent , Projector } from '../../mod.ts';
 
 export class Line {
-  texts: TextComponent[] = [];
+  texts: Text[] = [];
   constructor (
     protected projector: Projector
   ) {
@@ -16,26 +16,30 @@ export class Line {
     return this.texts.map((text) => text.renderedText).join('');
   }
 
-  addText (text: string | TextComponent): TextComponent {
-    if (text instanceof Text) {
-      text.addParentLine(this);
-      this.texts.push(text);
+  addText (tc: TextComponent): this {
+    if (tc instanceof Text) {
+      tc.addParentLine(this);
+      this.texts.push(tc);
       this.update();
-      return text;
+    } else if (typeof tc === 'function') {
+      this.addText(tc(new Text()));
+    } else if (Array.isArray(tc)) {
+      const [texts, renderFunction] = tc
+      for (const text of texts) {
+        text.addParentLine(this);
+      }
+  
+      this.addText(new FunctionalText(renderFunction));
     } else {
-      return this.addText(new Text(text));
-    }
-  }
-
-  addTemplateText ([texts, renderFunction]: [Text[], () => string]) {
-    for (const text of texts) {
-      text.addParentLine(this);
+      this.addText(new Text(tc));
     }
 
-    this.addText(new FunctionalText(renderFunction));
+    return this;
   }
 
-  addTexts (...texts: (TextComponent | string)[]): TextComponent[] {
-    return texts.map(text => this.addText(text));
+  addTexts (...texts: TextComponent[]): this {
+    texts.map(text => this.addText(text));
+
+    return this;
   }
 }

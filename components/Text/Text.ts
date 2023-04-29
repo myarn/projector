@@ -1,6 +1,6 @@
 import { Line } from '../../mod.ts';
 
-export type TextComponent = Text;
+export type TextComponent = string | Text | ((text: Text) => Text) | [Text[], () => string];
 
 export class Text {
   protected parentLines: Line[] = [];

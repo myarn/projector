@@ -9,8 +9,12 @@ export class Projector {
     this.write(cursorUp() + cursorSave);
   }
 
-  addLine (line: Line = new Line(this)) {
-    return line;
+  addLine (line: Line | ((line: Line) => void) = new Line(this)): this {
+    if (typeof line === 'function') {
+      line(new Line(this));
+    }
+
+    return this;
   }
 
   update (index: number) {
